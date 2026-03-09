@@ -1,2 +1,0 @@
-# Dependencias de Python para el sistema de examen
-mysql-connector-python==8.0.33

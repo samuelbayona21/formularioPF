@@ -1,63 +1,178 @@
-# Prueba de Conocimiento GAF
+# Sistema de Examen de Contabilidad GAF
 
-Sistema de exámenes en línea desarrollado con PHP, MySQL, HTML, CSS y JavaScript.
+Sistema completo de exámenes en línea con arquitectura limpia (Clean Architecture), desarrollado con Node.js, Express, React y MySQL.
 
-## Características
+## 🏗️ Arquitectura
 
-- Sistema de exámenes con temporizador
-- Persistencia de tiempo en caso de recarga (F5)
-- Panel administrativo con dashboard de resultados
-- Visualización detallada de respuestas
-- Top 10 mejores resultados
-- Validación de cédula solo números
-- Mensajes diferenciados según tipo de finalización
-
-## Requisitos
-
-- PHP 7.4 o superior
-- MySQL 5.7 o superior
-- Apache (XAMPP recomendado)
-
-## Instalación
-
-1. Clonar el repositorio en `C:\xampp\htdocs\`
-2. Importar `database/setup_completo.sql` en MySQL
-3. Configurar credenciales de BD en `config/database.php`
-4. Acceder a `http://localhost/examen_contadores/`
-
-## Estructura del Proyecto
-
+### Backend - Clean Architecture
 ```
-examen_contadores/
-├── api/                    # Endpoints REST
-├── app/
-│   ├── controllers/       # Controladores
-│   ├── models/            # Modelos
-│   └── core/              # Database, Security
-├── config/                # Configuración
-├── database/              # Scripts SQL
-├── public/                # Assets (CSS, JS, imágenes)
-├── views/                 # Vistas HTML
-└── index.html             # Punto de entrada
+backend/
+├── src/
+│   ├── domain/              # Capa de Dominio
+│   │   ├── entities/        # Entidades de negocio
+│   │   ├── use-cases/       # Casos de uso
+│   │   └── repositories/    # Interfaces de repositorios
+│   ├── application/         # Capa de Aplicación
+│   │   ├── dtos/           # Data Transfer Objects
+│   │   └── mappers/        # Mapeadores
+│   ├── infrastructure/      # Capa de Infraestructura
+│   │   ├── database/       # Configuración de BD
+│   │   ├── repositories/   # Implementación de repositorios
+│   │   └── config/         # Contenedor de dependencias
+│   └── presentation/        # Capa de Presentación
+│       ├── controllers/    # Controladores HTTP
+│       ├── routes/         # Rutas de la API
+│       └── middleware/     # Middleware
+├── database/               # Scripts SQL
+└── server.js              # Punto de entrada
 ```
 
-## Credenciales Admin
+### Frontend - React + Vite
+```
+frontend-react/
+├── src/
+│   ├── pages/             # Páginas principales
+│   ├── components/        # Componentes reutilizables
+│   ├── services/          # Servicios API
+│   ├── hooks/             # Custom hooks
+│   └── styles/            # Estilos globales
+└── public/                # Archivos estáticos
+```
 
+## 🚀 Inicio Rápido
+
+### Requisitos
+- Node.js 18+
+- MySQL 8.0+
+- npm o yarn
+
+### Instalación Local
+
+1. **Clonar repositorio**
+```bash
+git clone <tu-repositorio>
+cd formularioPF
+```
+
+2. **Configurar Backend**
+```bash
+cd backend
+npm install
+cp .env.example .env
+# Editar .env con tus credenciales de MySQL
+```
+
+3. **Configurar Base de Datos**
+```bash
+mysql -u root -p < backend/database/setup_completo.sql
+```
+
+4. **Iniciar Backend**
+```bash
+npm start
+# Backend corriendo en http://localhost:8000
+```
+
+5. **Configurar Frontend**
+```bash
+cd frontend-react
+npm install
+```
+
+6. **Iniciar Frontend**
+```bash
+npm run dev
+# Frontend corriendo en http://localhost:3000
+```
+
+## 🌐 Despliegue en Railway
+
+Ver [DEPLOYMENT.md](./DEPLOYMENT.md) para instrucciones detalladas de despliegue en Railway.
+
+### Resumen Rápido
+
+1. **Base de Datos**: Crear servicio MySQL en Railway
+2. **Backend**: Desplegar desde GitHub, configurar variables de entorno
+3. **Frontend**: Desplegar desde GitHub, configurar `VITE_API_URL`
+
+## 📚 API Endpoints
+
+### Autenticación
+- `POST /api/auth/login` - Login de usuario
+- `POST /api/admin/login` - Login de administrador
+- `POST /api/admin/logout` - Logout de administrador
+
+### Examen
+- `GET /api/examen/preguntas` - Obtener preguntas
+- `POST /api/examen/respuesta` - Guardar respuesta
+- `GET /api/examen/tiempo` - Obtener tiempo transcurrido
+- `POST /api/examen/tiempo` - Guardar tiempo
+- `POST /api/examen/finalizar` - Finalizar examen
+
+### Administración
+- `GET /api/admin/resultados` - Listar resultados (con filtros)
+- `GET /api/admin/estadisticas` - Estadísticas generales
+- `GET /api/admin/resultado/:intentoId` - Detalle de resultado
+
+## 🔧 Scripts Útiles
+
+### Backend
+```bash
+npm start              # Iniciar servidor
+npm run dev            # Modo desarrollo con hot-reload
+node scripts/truncate-data.js --keep-users    # Limpiar datos manteniendo usuarios
+node scripts/truncate-data.js --keep-admins   # Limpiar todo excepto admins
+```
+
+### Frontend
+```bash
+npm run dev            # Servidor de desarrollo
+npm run build          # Build para producción
+npm run preview        # Preview del build
+```
+
+## 👥 Usuarios por Defecto
+
+### Administradores
 - Usuario: `admin` / Contraseña: `admin123`
-- Usuario: `Oscar Solano` / Contraseña: `oscar2026*`
+- Usuario: `oscar2026` / Contraseña: `oscar2026`
 
-## URLs
+### Estudiantes
+Los estudiantes se registran automáticamente al iniciar un examen con su nombre y cédula.
 
-- **Inicio (Estudiantes):** `http://localhost/examen_contadores/`
-- **Panel Admin:** `http://localhost/examen_contadores/views/admin/login.html`
+## 🛠️ Tecnologías
 
-## Tecnologías
+### Backend
+- Node.js + Express
+- MySQL2
+- express-session
+- CORS
+- dotenv
 
-- Backend: PHP 7.4+
-- Base de datos: MySQL
-- Frontend: HTML5, CSS3, JavaScript (Vanilla)
-- Arquitectura: MVC con API REST
+### Frontend
+- React 18
+- React Router DOM
+- Axios
+- Tailwind CSS 3
+- Vite
 
-## Autor
+## � Características
 
-G.F. SISTEMAS - 2026
+- ✅ Arquitectura limpia y escalable
+- ✅ Autenticación con sesiones
+- ✅ Panel administrativo completo
+- ✅ Sistema de exámenes con temporizador
+- ✅ Cálculo automático de resultados
+- ✅ Filtrado y búsqueda de resultados
+- ✅ Interfaz moderna con Tailwind CSS
+- ✅ Manejo de errores con modales
+- ✅ Responsive design
+- ✅ Scripts de mantenimiento de BD
+
+## 📄 Licencia
+
+MIT
+
+## 👨‍💻 Autor
+
+G.F. SISTEMAS
