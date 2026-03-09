@@ -36,7 +36,9 @@ O usa un cliente MySQL como MySQL Workbench con las credenciales de Railway.
    - Click en "New" → "GitHub Repo"
    - Selecciona tu repositorio
 
-2. Configura las variables de entorno en Railway:
+2. Railway detectará automáticamente el proyecto Node.js usando Nixpacks
+
+3. Configura las variables de entorno en Railway:
    ```
    NODE_ENV=production
    SESSION_SECRET=tu_secreto_super_seguro_generado_aleatoriamente
@@ -44,9 +46,11 @@ O usa un cliente MySQL como MySQL Workbench con las credenciales de Railway.
    CORS_ORIGIN=https://tu-frontend.railway.app
    ```
 
-3. Railway detectará automáticamente las variables de MySQL
+4. Railway detectará automáticamente las variables de MySQL
 
-4. El backend se desplegará automáticamente usando el `railway.json`
+5. El backend se desplegará automáticamente
+
+**Nota:** Si Railway intenta usar Docker y falla, ve a Settings → Deploy y cambia el Builder a "Nixpacks".
 
 ### 4. Desplegar Frontend React
 
