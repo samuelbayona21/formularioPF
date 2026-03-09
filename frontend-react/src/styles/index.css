@@ -42,7 +42,7 @@ code {
     monospace;
 }
 
-/* Scrollbar personalizado */
+/* Scrollbar personalizado con RGB */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -53,15 +53,129 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(56, 189, 248, 0.3);
+  background: linear-gradient(180deg, #ff0080, #00ff80, #0080ff);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 189, 248, 0.5);
+  background: linear-gradient(180deg, #ff0080, #00ff80, #0080ff, #ff8000);
 }
 
-/* Animaciones personalizadas */
+/* ============================================ */
+/* ANIMACIONES RGB */
+/* ============================================ */
+
+/* Animación de gradiente RGB para bordes */
+@keyframes rgbGlow {
+  0% {
+    border-color: #ff0080;
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
+  }
+  25% {
+    border-color: #00ff80;
+    box-shadow: 0 0 20px rgba(0, 255, 128, 0.5), 0 0 40px rgba(0, 255, 128, 0.3);
+  }
+  50% {
+    border-color: #0080ff;
+    box-shadow: 0 0 20px rgba(0, 128, 255, 0.5), 0 0 40px rgba(0, 128, 255, 0.3);
+  }
+  75% {
+    border-color: #ff8000;
+    box-shadow: 0 0 20px rgba(255, 128, 0, 0.5), 0 0 40px rgba(255, 128, 0, 0.3);
+  }
+  100% {
+    border-color: #ff0080;
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
+  }
+}
+
+/* Animación de fondo RGB sutil */
+@keyframes rgbBackground {
+  0% {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(0, 255, 128, 0.1) 100%);
+  }
+  25% {
+    background: linear-gradient(135deg, rgba(0, 255, 128, 0.1) 0%, rgba(0, 128, 255, 0.1) 100%);
+  }
+  50% {
+    background: linear-gradient(135deg, rgba(0, 128, 255, 0.1) 0%, rgba(255, 128, 0, 0.1) 100%);
+  }
+  75% {
+    background: linear-gradient(135deg, rgba(255, 128, 0, 0.1) 0%, rgba(255, 0, 128, 0.1) 100%);
+  }
+  100% {
+    background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(0, 255, 128, 0.1) 100%);
+  }
+}
+
+/* Animación de texto RGB */
+@keyframes rgbText {
+  0% {
+    color: #ff0080;
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.8);
+  }
+  25% {
+    color: #00ff80;
+    text-shadow: 0 0 10px rgba(0, 255, 128, 0.8);
+  }
+  50% {
+    color: #0080ff;
+    text-shadow: 0 0 10px rgba(0, 128, 255, 0.8);
+  }
+  75% {
+    color: #ff8000;
+    text-shadow: 0 0 10px rgba(255, 128, 0, 0.8);
+  }
+  100% {
+    color: #ff0080;
+    text-shadow: 0 0 10px rgba(255, 0, 128, 0.8);
+  }
+}
+
+/* Efecto de pulso RGB para botones */
+@keyframes rgbPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 0, 128, 0.6), 0 0 40px rgba(255, 0, 128, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+  }
+}
+
+/* Clases de utilidad RGB */
+.rgb-border {
+  animation: rgbGlow 4s linear infinite;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.rgb-border-slow {
+  animation: rgbGlow 8s linear infinite;
+  border-width: 3px;
+  border-style: solid;
+}
+
+.rgb-background {
+  animation: rgbBackground 6s ease-in-out infinite;
+}
+
+.rgb-text {
+  animation: rgbText 4s linear infinite;
+  font-weight: 700;
+}
+
+.rgb-pulse {
+  animation: rgbPulse 2s ease-in-out infinite;
+}
+
+/* Hover RGB */
+.rgb-hover:hover {
+  animation: rgbGlow 2s linear infinite;
+  border-width: 2px;
+  border-style: solid;
+}
+
+/* Animaciones personalizadas existentes */
 @keyframes slideUp {
   from {
     opacity: 0;

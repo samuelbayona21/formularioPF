@@ -1,5 +1,5 @@
 /**
- * Página: Login
+ * Página: Login con efectos RGB
  */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -71,32 +71,25 @@ export default function Login() {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'rgb(10, 14, 26)' }}>
-            {/* Contenedor principal con medidas lógicas */}
-            <div style={{ 
-                width: '100%', 
-                maxWidth: '460px',
-                margin: '0 auto'
-            }}>
-                {/* Card del formulario */}
+            <div style={{ width: '100%', maxWidth: '460px', margin: '0 auto' }}>
+                {/* Card del formulario con efecto RGB */}
                 <div 
+                    className="rgb-border-slow"
                     style={{ 
                         background: 'linear-gradient(180deg, rgba(20, 30, 48, 0.98) 0%, rgba(10, 18, 30, 0.98) 100%)',
                         borderRadius: '32px',
-                        border: '3px solid rgba(37, 99, 235, 0.6)',
-                        boxShadow: '0 0 40px rgba(37, 99, 235, 0.4), 0 20px 60px rgba(0, 0, 0, 0.5)',
                         padding: '40px 32px',
                         backdropFilter: 'blur(10px)'
                     }}
                 >
-                    {/* Logo */}
+                    {/* Logo con efecto RGB */}
                     <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
                         <div 
+                            className="rgb-border"
                             style={{ 
                                 width: '140px',
                                 height: '140px',
                                 borderRadius: '50%',
-                                border: '5px solid rgb(37, 99, 235)',
-                                boxShadow: '0 0 30px rgba(37, 99, 235, 0.7), 0 0 60px rgba(37, 99, 235, 0.4)',
                                 background: 'white',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -112,12 +105,10 @@ export default function Login() {
                         </div>
                     </div>
 
-                    {/* Título */}
-                    <h1 style={{ 
+                    {/* Título con efecto RGB */}
+                    <h1 className="rgb-text" style={{ 
                         fontSize: '26px',
-                        fontWeight: '700',
                         textAlign: 'center',
-                        color: 'white',
                         marginBottom: '32px',
                         lineHeight: '1.3',
                         letterSpacing: '0.5px'
@@ -159,7 +150,7 @@ export default function Login() {
                                 })
                             }}
                         >
-                            Participante
+                            Usuario
                         </button>
                         <button
                             type="button"
@@ -228,21 +219,17 @@ export default function Login() {
                                     autoComplete="off"
                                     onFocus={() => setFocusedInput('nombre')}
                                     onBlur={() => setFocusedInput(null)}
+                                    className={focusedInput === 'nombre' ? 'rgb-hover' : ''}
                                     style={{
                                         width: '100%',
                                         padding: '14px 18px',
                                         borderRadius: '16px',
                                         fontSize: '15px',
                                         background: 'rgba(10, 18, 30, 0.9)',
-                                        border: focusedInput === 'nombre' 
-                                            ? '2px solid rgb(37, 99, 235)' 
-                                            : '2px solid rgba(75, 85, 99, 0.4)',
+                                        border: '2px solid rgba(75, 85, 99, 0.4)',
                                         color: 'white',
                                         outline: 'none',
-                                        transition: 'all 0.3s ease',
-                                        boxShadow: focusedInput === 'nombre' 
-                                            ? '0 0 0 4px rgba(37, 99, 235, 0.15)' 
-                                            : 'none'
+                                        transition: 'all 0.3s ease'
                                     }}
                                 />
                             </div>
@@ -271,21 +258,17 @@ export default function Login() {
                                 autoComplete="off"
                                 onFocus={() => setFocusedInput('cedula')}
                                 onBlur={() => setFocusedInput(null)}
+                                className={focusedInput === 'cedula' ? 'rgb-hover' : ''}
                                 style={{
                                     width: '100%',
                                     padding: '14px 18px',
                                     borderRadius: '16px',
                                     fontSize: '15px',
                                     background: 'rgba(10, 18, 30, 0.9)',
-                                    border: focusedInput === 'cedula' 
-                                        ? '2px solid rgb(37, 99, 235)' 
-                                        : '2px solid rgba(75, 85, 99, 0.4)',
+                                    border: '2px solid rgba(75, 85, 99, 0.4)',
                                     color: 'white',
                                     outline: 'none',
-                                    transition: 'all 0.3s ease',
-                                    boxShadow: focusedInput === 'cedula' 
-                                        ? '0 0 0 4px rgba(37, 99, 235, 0.15)' 
-                                        : 'none'
+                                    transition: 'all 0.3s ease'
                                 }}
                             />
                         </div>
@@ -311,21 +294,17 @@ export default function Login() {
                                     autoComplete="off"
                                     onFocus={() => setFocusedInput('password')}
                                     onBlur={() => setFocusedInput(null)}
+                                    className={focusedInput === 'password' ? 'rgb-hover' : ''}
                                     style={{
                                         width: '100%',
                                         padding: '14px 18px',
                                         borderRadius: '16px',
                                         fontSize: '15px',
                                         background: 'rgba(10, 18, 30, 0.9)',
-                                        border: focusedInput === 'password' 
-                                            ? '2px solid rgb(37, 99, 235)' 
-                                            : '2px solid rgba(75, 85, 99, 0.4)',
+                                        border: '2px solid rgba(75, 85, 99, 0.4)',
                                         color: 'white',
                                         outline: 'none',
-                                        transition: 'all 0.3s ease',
-                                        boxShadow: focusedInput === 'password' 
-                                            ? '0 0 0 4px rgba(37, 99, 235, 0.15)' 
-                                            : 'none'
+                                        transition: 'all 0.3s ease'
                                     }}
                                 />
                             </div>
@@ -334,16 +313,7 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={loading}
-                            onMouseEnter={(e) => {
-                                if (!loading) {
-                                    e.currentTarget.style.transform = 'translateY(-2px)';
-                                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(37, 99, 235, 0.6)';
-                                }
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = 'translateY(0)';
-                                e.currentTarget.style.boxShadow = '0 8px 30px rgba(37, 99, 235, 0.5)';
-                            }}
+                            className="rgb-pulse"
                             style={{
                                 width: '100%',
                                 padding: '16px 24px',
@@ -354,7 +324,6 @@ export default function Login() {
                                 cursor: loading ? 'not-allowed' : 'pointer',
                                 background: 'linear-gradient(135deg, rgb(37, 99, 235) 0%, rgb(56, 189, 248) 100%)',
                                 color: 'white',
-                                boxShadow: '0 8px 30px rgba(37, 99, 235, 0.5)',
                                 transition: 'all 0.3s ease',
                                 opacity: loading ? 0.6 : 1,
                                 display: 'flex',

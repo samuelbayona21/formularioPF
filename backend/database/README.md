@@ -63,6 +63,25 @@ cd backend
 node scripts/truncate-data.js --keep-admins
 ```
 
+### 5. add_extra_options.sql
+Agrega tres opciones adicionales a todas las preguntas del examen:
+- **Opción E:** "Solo A y B"
+- **Opción F:** "Solo C y D"
+- **Opción G:** "Todas las anteriores"
+
+**Uso manual:**
+```bash
+mysql -u root -p nombre_base_datos < backend/database/add_extra_options.sql
+```
+
+**Uso con script Node.js:**
+```bash
+cd backend
+node scripts/add-extra-options.js
+```
+
+**Nota:** El script verifica que las opciones no existan antes de insertarlas, por lo que es seguro ejecutarlo múltiples veces.
+
 ## Script Node.js: truncate-data.js
 
 Script automatizado para ejecutar las operaciones de limpieza desde Node.js.
