@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Conocimiento GAF - En Progreso</title>
+    <link rel="icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="shortcut icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="stylesheet" href="/examen_contadores/public/css/theme.css">
+    <link rel="stylesheet" href="/examen_contadores/public/css/examen.css">
+</head>
+<body>
+    <div class="app">
+        <div class="exam-container">
+        <!-- Barra superior -->
+        <header class="exam-header">
+            <div class="header-left">
+                <h1 id="examTitle">Prueba de Conocimiento GAF</h1>
+                <span id="studentName" class="student-info"></span>
+            </div>
+            <div class="header-right">
+                <div class="timer-container">
+                    <span class="timer-label">Tiempo restante:</span>
+                    <span id="timer" class="timer">20:00</span>
+                </div>
+                <div class="date-container">
+                    <span id="examDate"></span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Barra de progreso -->
+        <div class="progress-bar-container">
+            <div class="progress-info">
+                <span>Progreso: <span id="progressText">0/20</span></span>
+                <span id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+        </div>
+        
+        <!-- Contenido principal -->
+        <div class="exam-content">
+            <!-- Área de pregunta -->
+            <div class="question-area">
+                <div class="question-header">
+                    <h2>Pregunta <span id="currentQuestionNumber">1</span> de <span id="totalQuestions">20</span></h2>
+                </div>
+                
+                <div class="question-content">
+                    <p id="questionText" class="question-text"></p>
+                    
+                    <div id="optionsContainer" class="options-container">
+                        <!-- Las opciones se cargarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <div class="question-navigation">
+                    <button id="btnPrevious" class="btn-nav" disabled>
+                        ← Anterior
+                    </button>
+                    <button id="btnNext" class="btn-nav">
+                        Siguiente →
+                    </button>
+                    <button id="btnFinish" class="btn-finish" style="display: none;">
+                        Finalizar Prueba
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Panel de navegación lateral -->
+            <aside class="navigation-panel">
+                <h3>Navegación de Preguntas</h3>
+                <div class="legend">
+                    <div class="legend-item">
+                        <span class="legend-box answered"></span>
+                        <span>Respondida</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-box pending"></span>
+                        <span>Pendiente</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-box current"></span>
+                        <span>Actual</span>
+                    </div>
+                </div>
+                <div id="questionsGrid" class="questions-grid">
+                    <!-- Los números de preguntas se cargarán dinámicamente -->
+                </div>
+            </aside>
+        </div>
+    </div>
+    
+    <!-- Modal de confirmación -->
+    <div id="finishModal" class="modal">
+        <div class="modal-content">
+            <h2>¿Finalizar Prueba?</h2>
+            <p>¿Está seguro que desea finalizar la prueba?</p>
+            <p style="margin-top: 1rem;"><strong>Preguntas respondidas: <span id="modalAnswered">0</span>/<span id="modalTotal">50</span></strong></p>
+            <p><strong>Preguntas pendientes: <span id="modalPending">50</span></strong></p>
+            <div class="modal-buttons">
+                <button id="btnCancelFinish" class="btn-cancel">Cancelar</button>
+                <button id="btnConfirmFinish" class="btn-confirm">Sí, Finalizar</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/examen_contadores/public/js/examen.js?v=5"></script>
+</body>
+</html>

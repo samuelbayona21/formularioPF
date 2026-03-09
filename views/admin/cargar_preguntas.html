@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Preguntas desde CSV</title>
+    <link rel="icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="shortcut icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="stylesheet" href="/examen_contadores/public/css/theme.css">
+    <link rel="stylesheet" href="/examen_contadores/public/css/admin.css">
+    <link rel="stylesheet" href="/examen_contadores/public/css/upload.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Panel Administrativo</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <span>📊</span> Dashboard
+                </a>
+                <a href="cargar_preguntas.html" class="nav-item active">
+                    <span>📤</span> Cargar Preguntas
+                </a>
+                <a href="cargar_sistema_completo.html" class="nav-item">
+                    <span>📦</span> Sistema Completo (3 CSV)
+                </a>
+                <a href="../../index.html" class="nav-item">
+                    <span>🏠</span> Volver al Inicio
+                </a>
+            </nav>
+        </aside>
+        
+        <!-- Contenido principal -->
+        <main class="main-content">
+            <header class="content-header">
+                <h1>Cargar Preguntas desde CSV</h1>
+            </header>
+            
+            <!-- Instrucciones -->
+            <div class="instructions-card">
+                <h2>📋 Formato del Archivo CSV</h2>
+                <p>El archivo CSV debe tener el siguiente formato (separado por punto y coma):</p>
+                
+                <div class="csv-example">
+                    <code>
+numero_pregunta;texto_pregunta;opcion_a;opcion_b;opcion_c;opcion_d;opcion_e;opcion_f;opcion_g;opcion_h;respuesta_correcta<br>
+1;¿Qué es el activo?;Recursos de la empresa;Deudas;Capital;Ingresos;;;;A<br>
+2;¿Ecuación contable?;Ingresos-Gastos;Activo=Pasivo+Patrimonio;Debe=Haber;Ventas-Costos;;;;B
+                    </code>
+                </div>
+                
+                <div class="format-notes">
+                    <h3>Notas importantes:</h3>
+                    <ul>
+                        <li>La primera línea debe ser el encabezado (se ignora al procesar)</li>
+                        <li>Separador: punto y coma (;)</li>
+                        <li>Si una opción no se usa, dejar vacío (ej: ;;;;)</li>
+                        <li>La respuesta correcta debe ser una letra: A, B, C, D, E, F, G o H</li>
+                        <li>Codificación: UTF-8 para caracteres especiales</li>
+                    </ul>
+                </div>
+                
+                <a href="../../csv/plantilla_preguntas.csv" download class="btn-download">
+                    ⬇️ Descargar Plantilla CSV
+                </a>
+            </div>
+            
+            <!-- Formulario de carga -->
+            <div class="upload-card">
+                <h2>📤 Subir Archivo CSV</h2>
+                
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="examenId">Prueba:</label>
+                        <select id="examenId" name="examen_id" required>
+                            <option value="1">Prueba de Conocimiento GAF</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="csvFile">Archivo CSV:</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="csvFile" name="csv_file" accept=".csv" required>
+                            <span class="file-name">Ningún archivo seleccionado</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group checkbox-group">
+                        <label>
+                            <input type="checkbox" id="replaceExisting" name="replace_existing">
+                            Reemplazar preguntas existentes de la prueba
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="btn-primary">
+                        📤 Cargar Preguntas
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Resultado de la carga -->
+            <div id="resultContainer" class="result-container" style="display: none;">
+                <h2>Resultado de la Carga</h2>
+                <div id="resultContent"></div>
+            </div>
+            
+            <!-- Vista previa -->
+            <div id="previewContainer" class="preview-container" style="display: none;">
+                <h2>Vista Previa de Preguntas</h2>
+                <div id="previewContent"></div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/examen_contadores/public/js/upload.js"></script>
+</body>
+</html>

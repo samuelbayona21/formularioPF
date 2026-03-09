@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Administrativo</title>
+    <link rel="icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="shortcut icon" type="image/png" href="/examen_contadores/public/images/orb-logo.png">
+    <link rel="stylesheet" href="/examen_contadores/public/css/theme.css">
+    <link rel="stylesheet" href="/examen_contadores/public/css/dashboard-modern.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand">
+                <img src="/examen_contadores/public/images/orb-logo.png" alt="Logo" class="brand-logo">
+                <div class="brand-text">
+                    <h1>Panel Administrativo</h1>
+                    <p>Resultados de Pruebas</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button onclick="logout()" class="logout-button">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6.5 16H3.5C2.94772 16 2.5 15.5523 2.5 15V3C2.5 2.44772 2.94772 2 3.5 2H6.5M12.5 13L15.5 10M15.5 10L12.5 7M15.5 10H6.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Cerrar Sesión
+                </button>
+            </div>
+        </header>
+        
+        <main class="app-main">
+            <!-- Estadísticas -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(56, 189, 248, 0.2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88M13 7C13 9.20914 11.2091 11 9 11C6.79086 11 5 9.20914 5 7C5 4.79086 6.79086 3 9 3C11.2091 3 13 4.79086 13 7Z" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Total Estudiantes</span>
+                        <span id="totalStudents" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16, 185, 129, 0.2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Aprobados</span>
+                        <span id="totalApproved" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(239, 68, 68, 0.2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10 14L12 12M12 12L14 10M12 12L10 10M12 12L14 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Reprobados</span>
+                        <span id="totalFailed" class="stat-value">0</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(168, 85, 247, 0.2);">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 19V6L3 12M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="#a855f7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-label">Promedio General</span>
+                        <span id="averageScore" class="stat-value">0%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- TOP 10 -->
+            <div class="top10-card">
+                <div class="top10-header">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 2L12.5 7.5L18 8.5L14 12.5L15 18L10 15.5L5 18L6 12.5L2 8.5L7.5 7.5L10 2Z" fill="#fbbf24" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <h3>Top 10 Mejores Resultados</h3>
+                </div>
+                <div id="top10List" class="top10-list">
+                    <div class="top10-loading">Cargando...</div>
+                </div>
+            </div>
+            
+            <!-- Buscador y Filtros -->
+            <div class="search-card">
+                <div class="search-filters">
+                    <input type="text" id="searchInput" placeholder="Buscar por nombre o cédula..." class="search-input">
+                    
+                    <select id="statusFilter" class="filter-select">
+                        <option value="all">Todos</option>
+                        <option value="approved">Aprobados</option>
+                        <option value="failed">Reprobados</option>
+                    </select>
+                    
+                    <input type="date" id="dateFilter" class="date-filter" title="Filtrar por fecha">
+                    
+                    <button onclick="clearFilters()" class="clear-filters">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 4L4 12M4 4L12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        Limpiar
+                    </button>
+                    
+                    <span id="recordCount" class="record-count">0 registros</span>
+                </div>
+            </div>
+            
+            <!-- Tabla de Resultados -->
+            <div class="table-card">
+                <div class="table-container">
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" onclick="sortTable('nombre_completo')">
+                                    Nombre
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th class="sortable" onclick="sortTable('cedula')">
+                                    Cédula
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th class="sortable" onclick="sortTable('porcentaje')">
+                                    Porcentaje
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th>Progreso</th>
+                                <th class="sortable" onclick="sortTable('correctas')">
+                                    Correctas
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th class="sortable" onclick="sortTable('incorrectas')">
+                                    Incorrectas
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th class="sortable" onclick="sortTable('tiempo_segundos')">
+                                    Tiempo
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th class="sortable" onclick="sortTable('fecha')">
+                                    Fecha
+                                    <span class="sort-icon"></span>
+                                </th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultsTableBody">
+                            <tr>
+                                <td colspan="9" class="loading">Cargando datos...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="app-footer">
+            <p>© 2026 G.F. SISTEMAS</p>
+        </footer>
+    </div>
+    
+    <script src="/examen_contadores/public/js/dashboard-modern.js"></script>
+</body>
+</html>

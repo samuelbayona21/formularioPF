@@ -1,0 +1,3 @@
+# Denegar acceso a archivos de configuración
+Order Allow,Deny
+Deny from all

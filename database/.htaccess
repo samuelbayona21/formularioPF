@@ -1,0 +1,3 @@
+# Denegar acceso a archivos SQL
+Order Allow,Deny
+Deny from all

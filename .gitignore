@@ -1,0 +1,25 @@
+# Logs
+logs/*.log
+*.log
+
+# Archivos de configuración sensibles
+config/database.php
+
+# Archivos temporales
+*.tmp
+*.bak
+*.swp
+*~
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# Archivos de prueba
+api/test-*.php
