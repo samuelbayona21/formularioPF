@@ -135,6 +135,12 @@ git push origin main
 
 ## 🐛 Solución de Problemas
 
+### Error: "npm: command not found" durante el build
+Railway está intentando usar Docker en lugar de Nixpacks. Solución:
+1. Ve a Settings del servicio en Railway
+2. En la sección "Deploy", cambia el Builder a "Nixpacks"
+3. Redeploy el servicio
+
 ### Error de CORS
 - Verifica que `CORS_ORIGIN` esté configurado correctamente
 - Asegúrate de que `withCredentials: true` esté en el frontend
@@ -142,10 +148,12 @@ git push origin main
 ### Error de Base de Datos
 - Verifica que las variables `MYSQL*` estén disponibles
 - Revisa los logs de Railway para errores de conexión
+- Asegúrate de que la base de datos esté en la misma región
 
 ### Error 502/503
 - El backend puede estar iniciando, espera 1-2 minutos
 - Revisa los logs para errores de inicio
+- Verifica que el puerto esté configurado correctamente (Railway asigna automáticamente)
 
 ## 📚 Recursos
 

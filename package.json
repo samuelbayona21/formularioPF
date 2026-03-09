@@ -1,0 +1,19 @@
+{
+  "name": "examen-gaf-sistema",
+  "version": "1.0.0",
+  "description": "Sistema de Examen de Contabilidad GAF",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js",
+    "install-backend": "npm install --prefix backend",
+    "install-frontend": "npm install --prefix frontend-react",
+    "postinstall": "npm run install-backend"
+  },
+  "keywords": ["examen", "contabilidad", "nodejs", "react"],
+  "author": "G.F. SISTEMAS",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}
