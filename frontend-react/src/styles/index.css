@@ -42,7 +42,7 @@ code {
     monospace;
 }
 
-/* Scrollbar personalizado con RGB */
+/* Scrollbar personalizado con colores del proyecto */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -53,92 +53,92 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #ff0080, #00ff80, #0080ff);
+  background: linear-gradient(180deg, #2563eb, #38bdf8, #0ea5e9);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #ff0080, #00ff80, #0080ff, #ff8000);
+  background: linear-gradient(180deg, #1d4ed8, #2563eb, #38bdf8, #0ea5e9);
 }
 
 /* ============================================ */
-/* ANIMACIONES RGB */
+/* ANIMACIONES RGB CON PALETA DEL PROYECTO */
 /* ============================================ */
 
-/* Animación de gradiente RGB para bordes */
+/* Animación de gradiente RGB usando azules del proyecto */
 @keyframes rgbGlow {
   0% {
-    border-color: #ff0080;
-    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
+    border-color: #2563eb;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6), 0 0 40px rgba(37, 99, 235, 0.4);
   }
   25% {
-    border-color: #00ff80;
-    box-shadow: 0 0 20px rgba(0, 255, 128, 0.5), 0 0 40px rgba(0, 255, 128, 0.3);
+    border-color: #38bdf8;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.6), 0 0 40px rgba(56, 189, 248, 0.4);
   }
   50% {
-    border-color: #0080ff;
-    box-shadow: 0 0 20px rgba(0, 128, 255, 0.5), 0 0 40px rgba(0, 128, 255, 0.3);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.6), 0 0 40px rgba(14, 165, 233, 0.4);
   }
   75% {
-    border-color: #ff8000;
-    box-shadow: 0 0 20px rgba(255, 128, 0, 0.5), 0 0 40px rgba(255, 128, 0, 0.3);
+    border-color: #1d4ed8;
+    box-shadow: 0 0 20px rgba(29, 78, 216, 0.6), 0 0 40px rgba(29, 78, 216, 0.4);
   }
   100% {
-    border-color: #ff0080;
-    box-shadow: 0 0 20px rgba(255, 0, 128, 0.5), 0 0 40px rgba(255, 0, 128, 0.3);
+    border-color: #2563eb;
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6), 0 0 40px rgba(37, 99, 235, 0.4);
   }
 }
 
-/* Animación de fondo RGB sutil */
+/* Animación de fondo RGB sutil con azules */
 @keyframes rgbBackground {
   0% {
-    background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(0, 255, 128, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(56, 189, 248, 0.1) 100%);
   }
   25% {
-    background: linear-gradient(135deg, rgba(0, 255, 128, 0.1) 0%, rgba(0, 128, 255, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(56, 189, 248, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%);
   }
   50% {
-    background: linear-gradient(135deg, rgba(0, 128, 255, 0.1) 0%, rgba(255, 128, 0, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(29, 78, 216, 0.1) 100%);
   }
   75% {
-    background: linear-gradient(135deg, rgba(255, 128, 0, 0.1) 0%, rgba(255, 0, 128, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(37, 99, 235, 0.1) 100%);
   }
   100% {
-    background: linear-gradient(135deg, rgba(255, 0, 128, 0.1) 0%, rgba(0, 255, 128, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, rgba(56, 189, 248, 0.1) 100%);
   }
 }
 
-/* Animación de texto RGB */
+/* Animación de texto RGB con azules */
 @keyframes rgbText {
   0% {
-    color: #ff0080;
-    text-shadow: 0 0 10px rgba(255, 0, 128, 0.8);
+    color: #2563eb;
+    text-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
   }
   25% {
-    color: #00ff80;
-    text-shadow: 0 0 10px rgba(0, 255, 128, 0.8);
+    color: #38bdf8;
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.8);
   }
   50% {
-    color: #0080ff;
-    text-shadow: 0 0 10px rgba(0, 128, 255, 0.8);
+    color: #0ea5e9;
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.8);
   }
   75% {
-    color: #ff8000;
-    text-shadow: 0 0 10px rgba(255, 128, 0, 0.8);
+    color: #1d4ed8;
+    text-shadow: 0 0 10px rgba(29, 78, 216, 0.8);
   }
   100% {
-    color: #ff0080;
-    text-shadow: 0 0 10px rgba(255, 0, 128, 0.8);
+    color: #2563eb;
+    text-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
   }
 }
 
-/* Efecto de pulso RGB para botones */
+/* Efecto de pulso RGB para botones con azules */
 @keyframes rgbPulse {
   0%, 100% {
-    box-shadow: 0 0 20px rgba(255, 0, 128, 0.6), 0 0 40px rgba(255, 0, 128, 0.4);
+    box-shadow: 0 0 20px rgba(37, 99, 235, 0.6), 0 0 40px rgba(37, 99, 235, 0.4);
   }
   50% {
-    box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), 0 0 60px rgba(0, 255, 255, 0.4);
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.6), 0 0 60px rgba(56, 189, 248, 0.4);
   }
 }
 
