@@ -70,25 +70,23 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'rgb(10, 14, 26)' }}>
-            <div style={{ width: '100%', maxWidth: '460px', margin: '0 auto' }}>
+        <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8" style={{ background: 'rgb(10, 14, 26)' }}>
+            <div className="w-full max-w-[460px] mx-auto">
                 {/* Card del formulario con efecto RGB */}
                 <div 
                     className="rgb-border-slow"
                     style={{ 
                         background: 'linear-gradient(180deg, rgba(20, 30, 48, 0.98) 0%, rgba(10, 18, 30, 0.98) 100%)',
                         borderRadius: '32px',
-                        padding: '40px 32px',
+                        padding: '32px 24px',
                         backdropFilter: 'blur(10px)'
                     }}
                 >
                     {/* Logo con efecto RGB */}
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '32px' }}>
+                    <div className="flex justify-center mb-6 sm:mb-8">
                         <div 
-                            className="rgb-border"
+                            className="rgb-border w-28 h-28 sm:w-32 sm:h-32 lg:w-36 lg:h-36"
                             style={{ 
-                                width: '140px',
-                                height: '140px',
                                 borderRadius: '50%',
                                 background: 'white',
                                 display: 'flex',
@@ -100,79 +98,37 @@ export default function Login() {
                             <img 
                                 src="/orb-logo.png" 
                                 alt="Logo GAF" 
-                                style={{ width: '120px', height: '120px', objectFit: 'contain' }}
+                                className="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 object-contain"
                             />
                         </div>
                     </div>
 
                     {/* Título con efecto RGB */}
-                    <h1 className="rgb-text" style={{ 
-                        fontSize: '26px',
-                        textAlign: 'center',
-                        marginBottom: '32px',
-                        lineHeight: '1.3',
-                        letterSpacing: '0.5px'
-                    }}>
+                    <h1 className="rgb-text text-2xl sm:text-3xl text-center mb-6 sm:mb-8 leading-tight">
                         Prueba de<br />Conocimiento GAF
                     </h1>
 
                     {/* Toggle Admin/Usuario */}
-                    <div 
-                        style={{ 
-                            display: 'flex',
-                            gap: '8px',
-                            marginBottom: '28px',
-                            padding: '6px',
-                            background: 'rgba(10, 20, 35, 0.7)',
-                            borderRadius: '16px',
-                            border: '1px solid rgba(56, 189, 248, 0.25)'
-                        }}
-                    >
+                    <div className="flex gap-2 mb-6 sm:mb-7 p-1.5 bg-dark-900/70 rounded-2xl border border-primary-500/25">
                         <button
                             type="button"
                             onClick={() => handleToggle(false)}
-                            style={{
-                                flex: 1,
-                                padding: '12px 16px',
-                                borderRadius: '12px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                                border: 'none',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease',
-                                ...((!isAdmin) ? {
-                                    background: 'linear-gradient(135deg, rgb(29, 78, 216) 0%, rgb(56, 189, 248) 100%)',
-                                    color: 'white',
-                                    boxShadow: '0 4px 20px rgba(37, 99, 235, 0.5)'
-                                } : {
-                                    background: 'transparent',
-                                    color: 'rgb(156, 163, 175)'
-                                })
-                            }}
+                            className={`flex-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold border-none cursor-pointer transition-all ${
+                                !isAdmin 
+                                    ? 'bg-gradient-to-r from-blue-700 to-sky-400 text-white shadow-lg shadow-blue-500/50' 
+                                    : 'bg-transparent text-gray-400'
+                            }`}
                         >
                             Usuario
                         </button>
                         <button
                             type="button"
                             onClick={() => handleToggle(true)}
-                            style={{
-                                flex: 1,
-                                padding: '12px 16px',
-                                borderRadius: '12px',
-                                fontSize: '15px',
-                                fontWeight: '600',
-                                border: 'none',
-                                cursor: 'pointer',
-                                transition: 'all 0.3s ease',
-                                ...((isAdmin) ? {
-                                    background: 'linear-gradient(135deg, rgb(29, 78, 216) 0%, rgb(56, 189, 248) 100%)',
-                                    color: 'white',
-                                    boxShadow: '0 4px 20px rgba(37, 99, 235, 0.5)'
-                                } : {
-                                    background: 'transparent',
-                                    color: 'rgb(156, 163, 175)'
-                                })
-                            }}
+                            className={`flex-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-xl text-sm sm:text-base font-semibold border-none cursor-pointer transition-all ${
+                                isAdmin 
+                                    ? 'bg-gradient-to-r from-blue-700 to-sky-400 text-white shadow-lg shadow-blue-500/50' 
+                                    : 'bg-transparent text-gray-400'
+                            }`}
                         >
                             Administrador
                         </button>
@@ -180,34 +136,16 @@ export default function Login() {
 
                     {/* Error */}
                     {error && (
-                        <div 
-                            style={{
-                                marginBottom: '20px',
-                                padding: '14px 16px',
-                                borderRadius: '14px',
-                                fontSize: '14px',
-                                background: 'rgba(239, 68, 68, 0.12)',
-                                border: '1px solid rgba(239, 68, 68, 0.5)',
-                                color: 'rgb(248, 113, 113)',
-                                fontWeight: '500'
-                            }}
-                        >
+                        <div className="mb-5 p-3.5 sm:p-4 rounded-2xl text-sm bg-red-500/10 border border-red-500/50 text-red-400 font-medium">
                             {error}
                         </div>
                     )}
 
                     {/* Formulario */}
-                    <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
                         {!isAdmin && (
                             <div>
-                                <label style={{ 
-                                    display: 'block',
-                                    fontSize: '14px',
-                                    fontWeight: '600',
-                                    marginBottom: '10px',
-                                    color: 'rgb(209, 213, 219)',
-                                    letterSpacing: '0.3px'
-                                }}>
+                                <label className="block text-sm font-semibold mb-2.5 text-gray-300">
                                     Nombre Completo
                                 </label>
                                 <input
@@ -219,31 +157,15 @@ export default function Login() {
                                     autoComplete="off"
                                     onFocus={() => setFocusedInput('nombre')}
                                     onBlur={() => setFocusedInput(null)}
-                                    className={focusedInput === 'nombre' ? 'rgb-hover' : ''}
-                                    style={{
-                                        width: '100%',
-                                        padding: '14px 18px',
-                                        borderRadius: '16px',
-                                        fontSize: '15px',
-                                        background: 'rgba(10, 18, 30, 0.9)',
-                                        border: '2px solid rgba(75, 85, 99, 0.4)',
-                                        color: 'white',
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
+                                    className={`w-full px-4 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base bg-dark-900/90 border-2 border-gray-600/40 text-white outline-none transition-all ${
+                                        focusedInput === 'nombre' ? 'rgb-hover' : ''
+                                    }`}
                                 />
                             </div>
                         )}
 
                         <div>
-                            <label style={{ 
-                                display: 'block',
-                                fontSize: '14px',
-                                fontWeight: '600',
-                                marginBottom: '10px',
-                                color: 'rgb(209, 213, 219)',
-                                letterSpacing: '0.3px'
-                            }}>
+                            <label className="block text-sm font-semibold mb-2.5 text-gray-300">
                                 {isAdmin ? 'Usuario' : 'Cédula'}
                             </label>
                             <input
@@ -258,31 +180,15 @@ export default function Login() {
                                 autoComplete="off"
                                 onFocus={() => setFocusedInput('cedula')}
                                 onBlur={() => setFocusedInput(null)}
-                                className={focusedInput === 'cedula' ? 'rgb-hover' : ''}
-                                style={{
-                                    width: '100%',
-                                    padding: '14px 18px',
-                                    borderRadius: '16px',
-                                    fontSize: '15px',
-                                    background: 'rgba(10, 18, 30, 0.9)',
-                                    border: '2px solid rgba(75, 85, 99, 0.4)',
-                                    color: 'white',
-                                    outline: 'none',
-                                    transition: 'all 0.3s ease'
-                                }}
+                                className={`w-full px-4 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base bg-dark-900/90 border-2 border-gray-600/40 text-white outline-none transition-all ${
+                                    focusedInput === 'cedula' ? 'rgb-hover' : ''
+                                }`}
                             />
                         </div>
 
                         {isAdmin && (
                             <div>
-                                <label style={{ 
-                                    display: 'block',
-                                    fontSize: '14px',
-                                    fontWeight: '600',
-                                    marginBottom: '10px',
-                                    color: 'rgb(209, 213, 219)',
-                                    letterSpacing: '0.3px'
-                                }}>
+                                <label className="block text-sm font-semibold mb-2.5 text-gray-300">
                                     Contraseña
                                 </label>
                                 <input
@@ -294,18 +200,9 @@ export default function Login() {
                                     autoComplete="off"
                                     onFocus={() => setFocusedInput('password')}
                                     onBlur={() => setFocusedInput(null)}
-                                    className={focusedInput === 'password' ? 'rgb-hover' : ''}
-                                    style={{
-                                        width: '100%',
-                                        padding: '14px 18px',
-                                        borderRadius: '16px',
-                                        fontSize: '15px',
-                                        background: 'rgba(10, 18, 30, 0.9)',
-                                        border: '2px solid rgba(75, 85, 99, 0.4)',
-                                        color: 'white',
-                                        outline: 'none',
-                                        transition: 'all 0.3s ease'
-                                    }}
+                                    className={`w-full px-4 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base bg-dark-900/90 border-2 border-gray-600/40 text-white outline-none transition-all ${
+                                        focusedInput === 'password' ? 'rgb-hover' : ''
+                                    }`}
                                 />
                             </div>
                         )}
@@ -313,29 +210,11 @@ export default function Login() {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="rgb-pulse"
-                            style={{
-                                width: '100%',
-                                padding: '16px 24px',
-                                borderRadius: '16px',
-                                fontSize: '18px',
-                                fontWeight: '700',
-                                border: 'none',
-                                cursor: loading ? 'not-allowed' : 'pointer',
-                                background: 'linear-gradient(135deg, rgb(37, 99, 235) 0%, rgb(56, 189, 248) 100%)',
-                                color: 'white',
-                                transition: 'all 0.3s ease',
-                                opacity: loading ? 0.6 : 1,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '10px',
-                                marginTop: '12px'
-                            }}
+                            className="rgb-pulse w-full px-6 py-3.5 sm:py-4 rounded-2xl text-base sm:text-lg font-bold border-none cursor-pointer bg-gradient-to-r from-blue-600 to-sky-400 text-white transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 mt-3"
                         >
                             <span>{loading ? 'Ingresando...' : 'Ingresar'}</span>
                             {!loading && (
-                                <svg style={{ width: '22px', height: '22px' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                                 </svg>
                             )}

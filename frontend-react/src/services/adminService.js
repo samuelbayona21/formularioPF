@@ -22,5 +22,10 @@ export const adminService = {
     async getDetalleResultado(intentoId) {
         const response = await api.get(`/admin/resultado/${intentoId}`);
         return response.data.detalle;
+    },
+
+    async getTopResultados(limit = 5) {
+        const response = await api.get(`/admin/top-resultados?limit=${limit}`);
+        return response.data.topResultados;
     }
 };

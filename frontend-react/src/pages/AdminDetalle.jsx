@@ -103,12 +103,12 @@ export default function AdminDetalle() {
             </header>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                {/* Info del Estudiante */}
-                <div className="bg-dark-800/50 backdrop-blur-xl border border-gray-700 rounded-xl p-6 mb-6">
+                {/* Info del Usuario con RGB */}
+                <div className="rgb-border bg-dark-800/50 backdrop-blur-xl rounded-xl p-6 mb-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div>
                             <p className="text-sm text-gray-400 mb-1">Usuario</p>
-                            <p className="text-lg font-semibold text-white">{detalle.usuario.nombreCompleto}</p>
+                            <p className="rgb-text text-lg font-semibold">{detalle.usuario.nombreCompleto}</p>
                         </div>
                         <div>
                             <p className="text-sm text-gray-400 mb-1">Cédula</p>
@@ -129,9 +129,9 @@ export default function AdminDetalle() {
                     </div>
                 </div>
 
-                {/* Estadísticas */}
+                {/* Estadísticas con RGB */}
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                    <div className="bg-dark-800/50 backdrop-blur-xl border border-green-500/30 rounded-xl p-6">
+                    <div className="rgb-border-slow bg-dark-800/50 backdrop-blur-xl rounded-xl p-6">
                         <div className="flex items-center gap-3">
                             <div className="p-3 bg-green-500/20 rounded-lg">
                                 <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +151,7 @@ export default function AdminDetalle() {
                         </div>
                     </div>
 
-                    <div className="bg-dark-800/50 backdrop-blur-xl border border-red-500/30 rounded-xl p-6">
+                    <div className="rgb-border-slow bg-dark-800/50 backdrop-blur-xl rounded-xl p-6">
                         <div className="flex items-center gap-3">
                             <div className="p-3 bg-red-500/20 rounded-lg">
                                 <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -173,7 +173,7 @@ export default function AdminDetalle() {
                         </div>
                     </div>
 
-                    <div className="bg-dark-800/50 backdrop-blur-xl border border-yellow-500/30 rounded-xl p-6">
+                    <div className="rgb-border-slow bg-dark-800/50 backdrop-blur-xl rounded-xl p-6">
                         <div className="flex items-center gap-3">
                             <div className="p-3 bg-yellow-500/20 rounded-lg">
                                 <svg className="w-6 h-6 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -187,7 +187,7 @@ export default function AdminDetalle() {
                         </div>
                     </div>
 
-                    <div className="bg-dark-800/50 backdrop-blur-xl border border-primary-500/30 rounded-xl p-6">
+                    <div className="rgb-border-slow bg-dark-800/50 backdrop-blur-xl rounded-xl p-6">
                         <div className="flex items-center gap-3">
                             <div className="p-3 bg-primary-500/20 rounded-lg">
                                 <svg className="w-6 h-6 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -3,11 +3,12 @@
  * Maneja las peticiones HTTP del panel administrativo
  */
 export class AdminController {
-    constructor(loginAdminUseCase, obtenerResultadosUseCase, obtenerEstadisticasUseCase, obtenerDetalleResultadoUseCase) {
+    constructor(loginAdminUseCase, obtenerResultadosUseCase, obtenerEstadisticasUseCase, obtenerDetalleResultadoUseCase, obtenerTopResultadosUseCase) {
         this.loginAdminUseCase = loginAdminUseCase;
         this.obtenerResultadosUseCase = obtenerResultadosUseCase;
         this.obtenerEstadisticasUseCase = obtenerEstadisticasUseCase;
         this.obtenerDetalleResultadoUseCase = obtenerDetalleResultadoUseCase;
+        this.obtenerTopResultadosUseCase = obtenerTopResultadosUseCase;
     }
 
     async login(req, res) {
@@ -113,6 +114,24 @@ export class AdminController {
             res.status(404).json({
                 success: false,
                 message: error.message
+            });
+        }
+    }
+
+    async getTopResultados(req, res) {
+        try {
+            const limit = parseInt(req.query.limit) || 5;
+            const topResultados = await this.obtenerTopResultadosUseCase.execute(limit);
+
+            res.json({
+                success: true,
+                topResultados
+            });
+        } catch (error) {
+            console.error('Error en getTopResultados:', error);
+            res.status(500).json({
+                success: false,
+                message: 'Error al obtener top resultados'
             });
         }
     }

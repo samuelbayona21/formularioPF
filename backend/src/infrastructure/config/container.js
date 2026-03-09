@@ -19,6 +19,7 @@ import { LoginAdminUseCase } from '../../domain/use-cases/LoginAdminUseCase.js';
 import { ObtenerResultadosUseCase } from '../../domain/use-cases/ObtenerResultadosUseCase.js';
 import { ObtenerEstadisticasUseCase } from '../../domain/use-cases/ObtenerEstadisticasUseCase.js';
 import { ObtenerDetalleResultadoUseCase } from '../../domain/use-cases/ObtenerDetalleResultadoUseCase.js';
+import { ObtenerTopResultadosUseCase } from '../../domain/use-cases/ObtenerTopResultadosUseCase.js';
 
 // Controllers
 import { ExamenController } from '../../presentation/controllers/ExamenController.js';
@@ -80,6 +81,10 @@ class Container {
             this.dependencies.usuarioRepository
         );
 
+        this.dependencies.obtenerTopResultadosUseCase = new ObtenerTopResultadosUseCase(
+            this.dependencies.usuarioRepository
+        );
+
         // Controllers (Presentation Layer)
         this.dependencies.examenController = new ExamenController(
             this.dependencies.iniciarExamenUseCase,
@@ -94,7 +99,8 @@ class Container {
             this.dependencies.loginAdminUseCase,
             this.dependencies.obtenerResultadosUseCase,
             this.dependencies.obtenerEstadisticasUseCase,
-            this.dependencies.obtenerDetalleResultadoUseCase
+            this.dependencies.obtenerDetalleResultadoUseCase,
+            this.dependencies.obtenerTopResultadosUseCase
         );
     }
 

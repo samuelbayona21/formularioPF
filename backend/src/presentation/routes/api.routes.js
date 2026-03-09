@@ -28,6 +28,7 @@ export function createApiRoutes(examenController, adminController) {
     router.post('/admin/logout', validateAdmin, (req, res) => adminController.logout(req, res));
     router.get('/admin/resultados', validateAdmin, (req, res) => adminController.getResultados(req, res));
     router.get('/admin/estadisticas', validateAdmin, (req, res) => adminController.getEstadisticas(req, res));
+    router.get('/admin/top-resultados', validateAdmin, (req, res) => adminController.getTopResultados(req, res));
     router.get('/admin/resultado/:intentoId', validateAdmin, (req, res) => adminController.getDetalleResultado(req, res));
 
     return router;

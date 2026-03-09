@@ -105,6 +105,29 @@ export class MySQLUsuarioRepository extends IUsuarioRepository {
         return rows[0] || {};
     }
 
+    async getTopResultados(limit = 5) {
+        const [rows] = await db.query(`
+            SELECT 
+                u.nombre_completo,
+                u.cedula,
+                r.porcentaje,
+                r.respuestas_correctas,
+                e.total_preguntas,
+                ie.tiempo_segundos,
+                ie.fecha_fin,
+                ie.id as intento_id
+            FROM usuarios u
+            INNER JOIN intentos_examen ie ON u.id = ie.usuario_id
+            INNER JOIN resultados r ON ie.id = r.intento_id
+            INNER JOIN examenes e ON ie.examen_id = e.id
+            WHERE u.tipo_usuario = 'estudiante' 
+            AND ie.estado = 'completado'
+            ORDER BY r.porcentaje DESC, ie.tiempo_segundos ASC
+            LIMIT ?
+        `, [limit]);
+        return rows;
+    }
+
     async getDetalleResultado(intentoId) {
         // Obtener información del intento y usuario
         const [intentoRows] = await db.query(`
