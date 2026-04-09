@@ -70,10 +70,17 @@ export class ExamenController {
 
     async guardarRespuesta(req, res) {
         try {
+            console.log('💾 Guardar respuesta:', {
+                intentoId: req.intentoId,
+                body: req.body,
+                session: req.session
+            });
+
             const dto = new GuardarRespuestaDTO(req.body);
             
             const validation = dto.validate();
             if (!validation.isValid) {
+                console.error('❌ Validación fallida:', validation.errors);
                 return res.status(400).json({
                     success: false,
                     errors: validation.errors
@@ -86,12 +93,14 @@ export class ExamenController {
                 dto.respuesta
             );
 
+            console.log('✅ Respuesta guardada exitosamente');
+
             res.json({
                 success: true,
                 message: 'Respuesta guardada'
             });
         } catch (error) {
-            console.error('Error en guardarRespuesta:', error);
+            console.error('❌ Error en guardarRespuesta:', error);
             res.status(400).json({
                 success: false,
                 message: error.message
@@ -156,17 +165,34 @@ export class ExamenController {
         try {
             const { tiempo_agotado } = req.body;
             
+            console.log('🏁 Finalizar examen:', {
+                intentoId: req.intentoId,
+                tiempo_agotado,
+                session: req.session,
+                body: req.body
+            });
+
+            if (!req.intentoId) {
+                console.error('❌ No hay intentoId en la sesión');
+                return res.status(400).json({
+                    success: false,
+                    message: 'No hay sesión activa. Por favor, inicia sesión nuevamente.'
+                });
+            }
+            
             const resultado = await this.finalizarExamenUseCase.execute(
                 req.intentoId,
                 tiempo_agotado
             );
+
+            console.log('✅ Examen finalizado exitosamente:', resultado);
 
             res.json({
                 success: true,
                 resultado
             });
         } catch (error) {
-            console.error('Error en finalizar:', error);
+            console.error('❌ Error en finalizar:', error);
             res.status(400).json({
                 success: false,
                 message: error.message

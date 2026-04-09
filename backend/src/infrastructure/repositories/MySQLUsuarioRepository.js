@@ -121,7 +121,7 @@ export class MySQLUsuarioRepository extends IUsuarioRepository {
             INNER JOIN resultados r ON ie.id = r.intento_id
             INNER JOIN examenes e ON ie.examen_id = e.id
             WHERE u.tipo_usuario = 'estudiante' 
-            AND ie.estado = 'completado'
+            AND ie.estado IN ('completado', 'finalizado')
             ORDER BY r.porcentaje DESC, ie.tiempo_segundos ASC
             LIMIT ?
         `, [limit]);
