@@ -4,273 +4,333 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
-const COLORS = {
-    primary: [37, 99, 235],      // #2563eb
-    primaryLight: [56, 189, 248], // #38bdf8
-    dark: [15, 23, 42],           // dark bg
-    darkCard: [30, 41, 59],       // dark card
-    white: [255, 255, 255],
-    gray: [148, 163, 184],
-    green: [34, 197, 94],
-    red: [239, 68, 68],
-    yellow: [234, 179, 8],
-};
+const PRIMARY      = [37, 99, 235];
+const PRIMARY_DARK = [29, 78, 216];
+const WHITE        = [255, 255, 255];
+const GRAY_LIGHT   = [241, 245, 249];
+const GRAY_TEXT    = [100, 116, 139];
+const GREEN        = [22, 163, 74];
+const RED          = [220, 38, 38];
+const GOLD         = [161, 120, 0];
+const SILVER       = [100, 116, 139];
+const BRONZE       = [154, 90, 30];
+const DARK         = [15, 23, 42];
 
-function addHeader(doc, title) {
-    const pageWidth = doc.internal.pageSize.getWidth();
-
-    // Fondo del header
-    doc.setFillColor(...COLORS.primary);
-    doc.rect(0, 0, pageWidth, 28, 'F');
-
-    // Título
-    doc.setTextColor(...COLORS.white);
-    doc.setFontSize(16);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Prueba de Conocimiento GAF', 14, 11);
-
-    // Subtítulo
-    doc.setFontSize(10);
+function addHeader(doc, title, subtitle = '') {
+    const W = doc.internal.pageSize.getWidth();
+    doc.setFillColor(...DARK);
+    doc.rect(0, 0, W, 18, 'F');
+    doc.setFillColor(...PRIMARY);
+    doc.rect(0, 18, W, 14, 'F');
+    doc.setTextColor(...WHITE);
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text(title, 14, 20);
-
-    // Fecha
-    const fecha = new Date().toLocaleDateString('es-ES', {
-        day: '2-digit', month: 'long', year: 'numeric',
-        hour: '2-digit', minute: '2-digit'
-    });
-    doc.text(`Generado: ${fecha}`, pageWidth - 14, 20, { align: 'right' });
-}
-
-function addFooter(doc) {
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const totalPages = doc.internal.getNumberOfPages();
-
-    for (let i = 1; i <= totalPages; i++) {
-        doc.setPage(i);
-        doc.setFillColor(...COLORS.primary);
-        doc.rect(0, pageHeight - 12, pageWidth, 12, 'F');
-        doc.setTextColor(...COLORS.white);
+    doc.text('SISTEMA DE EVALUACION GAF', 14, 12);
+    const fecha = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'long', year: 'numeric' });
+    doc.text(fecha, W - 14, 12, { align: 'right' });
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text(title.toUpperCase(), 14, 29);
+    if (subtitle) {
         doc.setFontSize(8);
-        doc.text('Sistema de Evaluación GAF - Confidencial', 14, pageHeight - 4);
-        doc.text(`Página ${i} de ${totalPages}`, pageWidth - 14, pageHeight - 4, { align: 'right' });
+        doc.setFont('helvetica', 'normal');
+        doc.text(subtitle, W - 14, 29, { align: 'right' });
     }
 }
 
+function addFooter(doc) {
+    const W = doc.internal.pageSize.getWidth();
+    const H = doc.internal.pageSize.getHeight();
+    const total = doc.internal.getNumberOfPages();
+    for (let i = 1; i <= total; i++) {
+        doc.setPage(i);
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.5);
+        doc.line(14, H - 14, W - 14, H - 14);
+        doc.setFontSize(7.5);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(...GRAY_TEXT);
+        doc.text('Documento confidencial - Prueba de Conocimiento GAF', 14, H - 7);
+        doc.text(`Pagina ${i} de ${total}`, W - 14, H - 7, { align: 'right' });
+    }
+}
+
+function medalLabel(pos) {
+    if (pos === 1) return '1er Lugar';
+    if (pos === 2) return '2do Lugar';
+    if (pos === 3) return '3er Lugar';
+    return `${pos}to Lugar`;
+}
+
+function medalColor(pos) {
+    if (pos === 1) return GOLD;
+    if (pos === 2) return SILVER;
+    if (pos === 3) return BRONZE;
+    return PRIMARY;
+}
+
 export const pdfService = {
-    /**
-     * Exportar reporte completo del dashboard
-     */
+
     exportarDashboard(estadisticas, resultados, topResultados) {
-        const doc = new jsPDF({ orientation: 'landscape' });
-        const pageWidth = doc.internal.pageSize.getWidth();
+        const doc = new jsPDF({ orientation: 'portrait' });
+        const W = doc.internal.pageSize.getWidth();
 
-        addHeader(doc, 'Reporte General de Resultados');
+        addHeader(doc, 'Reporte General de Resultados', `Total registros: ${resultados.length}`);
 
-        // ── Estadísticas generales ──
-        let y = 36;
-        doc.setTextColor(...COLORS.primary);
-        doc.setFontSize(12);
+        let y = 42;
+
+        // Estadísticas generales
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
-        doc.text('Estadísticas Generales', 14, y);
-        y += 6;
+        doc.setTextColor(...PRIMARY_DARK);
+        doc.text('ESTADISTICAS GENERALES', 14, y);
+        y += 4;
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.4);
+        doc.line(14, y, W - 14, y);
+        y += 5;
 
-        const statsData = [
-            ['Total Usuarios', estadisticas.totalUsuarios],
-            ['Total Exámenes', estadisticas.totalExamenes],
-            ['Aprobados', estadisticas.examenesCompletados],
-            ['Reprobados', estadisticas.totalExamenes - estadisticas.examenesCompletados],
-            ['Promedio General', `${estadisticas.promedioCalificacion}%`],
+        const cardW = (W - 28 - 9) / 4;
+        const cards = [
+            { label: 'Total Usuarios',  value: estadisticas.totalUsuarios,                                          color: PRIMARY },
+            { label: 'Aprobados',       value: estadisticas.examenesCompletados,                                    color: GREEN },
+            { label: 'Reprobados',      value: estadisticas.totalExamenes - estadisticas.examenesCompletados,       color: RED },
+            { label: 'Promedio',        value: `${estadisticas.promedioCalificacion}%`,                             color: PRIMARY_DARK },
         ];
 
-        autoTable(doc, {
-            startY: y,
-            head: [['Indicador', 'Valor']],
-            body: statsData,
-            theme: 'grid',
-            headStyles: { fillColor: COLORS.primary, textColor: COLORS.white, fontStyle: 'bold' },
-            alternateRowStyles: { fillColor: [241, 245, 249] },
-            columnStyles: { 0: { fontStyle: 'bold' }, 1: { halign: 'center' } },
-            margin: { left: 14, right: pageWidth / 2 + 5 },
+        cards.forEach((card, i) => {
+            const x = 14 + i * (cardW + 3);
+            doc.setFillColor(...GRAY_LIGHT);
+            doc.roundedRect(x, y, cardW, 18, 2, 2, 'F');
+            doc.setDrawColor(...card.color);
+            doc.setLineWidth(0.8);
+            doc.line(x, y, x, y + 18);
+            doc.setFontSize(16);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(...card.color);
+            doc.text(String(card.value), x + cardW / 2, y + 11, { align: 'center' });
+            doc.setFontSize(7);
+            doc.setFont('helvetica', 'normal');
+            doc.setTextColor(...GRAY_TEXT);
+            doc.text(card.label.toUpperCase(), x + cardW / 2, y + 16, { align: 'center' });
         });
 
-        // ── Top 5 ──
-        if (topResultados && topResultados.length > 0) {
-            const topY = doc.lastAutoTable.finalY > 80 ? doc.lastAutoTable.finalY + 10 : 36;
+        y += 26;
 
-            doc.setTextColor(...COLORS.primary);
-            doc.setFontSize(12);
+        // Top 5
+        if (topResultados && topResultados.length > 0) {
+            doc.setFontSize(9);
             doc.setFont('helvetica', 'bold');
-            doc.text('Top 5 Mejores Resultados', pageWidth / 2 + 5, 42);
+            doc.setTextColor(...PRIMARY_DARK);
+            doc.text('TOP 5 MEJORES RESULTADOS', 14, y);
+            y += 4;
+            doc.setDrawColor(...PRIMARY);
+            doc.setLineWidth(0.4);
+            doc.line(14, y, W - 14, y);
+            y += 3;
 
             autoTable(doc, {
-                startY: 48,
-                head: [['#', 'Nombre', 'Cédula', 'Porcentaje', 'Correctas', 'Tiempo']],
+                startY: y,
+                head: [['Posicion', 'Nombre Completo', 'Cedula', 'Porcentaje', 'Correctas', 'Tiempo']],
                 body: topResultados.map(r => [
-                    r.posicion === 1 ? '🥇 1' : r.posicion === 2 ? '🥈 2' : r.posicion === 3 ? '🥉 3' : r.posicion,
+                    medalLabel(r.posicion),
                     r.nombreCompleto,
                     r.cedula,
                     `${r.porcentaje}%`,
-                    `${r.respuestasCorrectas}/${r.totalPreguntas}`,
+                    `${r.respuestasCorrectas} / ${r.totalPreguntas}`,
                     r.tiempoFormateado,
                 ]),
-                theme: 'grid',
-                headStyles: { fillColor: COLORS.primary, textColor: COLORS.white, fontStyle: 'bold' },
-                alternateRowStyles: { fillColor: [241, 245, 249] },
+                theme: 'plain',
+                headStyles: { fillColor: PRIMARY_DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8, cellPadding: 4 },
+                bodyStyles: { fontSize: 8.5, cellPadding: 4 },
+                alternateRowStyles: { fillColor: GRAY_LIGHT },
                 columnStyles: {
-                    0: { halign: 'center', fontStyle: 'bold' },
-                    3: { halign: 'center', fontStyle: 'bold', textColor: COLORS.green },
+                    0: { fontStyle: 'bold', cellWidth: 22 },
+                    1: { cellWidth: 60 },
+                    2: { cellWidth: 28, halign: 'center' },
+                    3: { halign: 'center', fontStyle: 'bold' },
                     4: { halign: 'center' },
                     5: { halign: 'center' },
                 },
-                margin: { left: pageWidth / 2 + 5, right: 14 },
+                didParseCell(data) {
+                    if (data.section === 'body') {
+                        if (data.column.index === 0) {
+                            data.cell.styles.textColor = medalColor(topResultados[data.row.index]?.posicion);
+                        }
+                        if (data.column.index === 3) {
+                            data.cell.styles.textColor = parseFloat(data.cell.raw) >= 60 ? GREEN : RED;
+                        }
+                    }
+                },
+                margin: { left: 14, right: 14 },
             });
+
+            y = doc.lastAutoTable.finalY + 10;
         }
 
-        // ── Tabla de todos los resultados ──
-        const tableY = Math.max(
-            doc.lastAutoTable?.finalY || 0,
-            80
-        ) + 12;
-
-        doc.setTextColor(...COLORS.primary);
-        doc.setFontSize(12);
+        // Tabla completa
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
-        doc.text('Detalle de Todos los Resultados', 14, tableY);
+        doc.setTextColor(...PRIMARY_DARK);
+        doc.text('DETALLE DE TODOS LOS RESULTADOS', 14, y);
+        y += 4;
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.4);
+        doc.line(14, y, W - 14, y);
+        y += 3;
 
         autoTable(doc, {
-            startY: tableY + 6,
-            head: [['Nombre', 'Cédula', 'Porcentaje', 'Correctas', 'Incorrectas', 'Tiempo', 'Fecha', 'Estado']],
+            startY: y,
+            head: [['Nombre', 'Cedula', '%', 'Correctas', 'Tiempo', 'Fecha', 'Estado']],
             body: resultados.map(r => [
                 r.nombreCompleto,
                 r.cedula,
-                `${Number(r.porcentaje).toFixed(2)}%`,
-                r.respuestasCorrectas,
-                r.totalPreguntas - r.respuestasCorrectas,
+                `${Number(r.porcentaje).toFixed(1)}%`,
+                `${r.respuestasCorrectas}/${r.totalPreguntas}`,
                 r.tiempoSegundos ? `${Math.floor(r.tiempoSegundos / 60)}m ${r.tiempoSegundos % 60}s` : '-',
                 r.fechaFin ? new Date(r.fechaFin).toLocaleDateString('es-ES') : '-',
-                r.porcentaje >= 60 ? 'Aprobado' : 'Reprobado',
+                r.porcentaje >= 60 ? 'APROBADO' : 'REPROBADO',
             ]),
-            theme: 'striped',
-            headStyles: { fillColor: COLORS.primary, textColor: COLORS.white, fontStyle: 'bold' },
-            alternateRowStyles: { fillColor: [241, 245, 249] },
+            theme: 'plain',
+            headStyles: { fillColor: PRIMARY_DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 7.5, cellPadding: 3.5 },
+            bodyStyles: { fontSize: 8, cellPadding: 3.5 },
+            alternateRowStyles: { fillColor: GRAY_LIGHT },
             columnStyles: {
+                0: { cellWidth: 50 },
+                1: { cellWidth: 26, halign: 'center' },
                 2: { halign: 'center', fontStyle: 'bold' },
                 3: { halign: 'center' },
                 4: { halign: 'center' },
                 5: { halign: 'center' },
-                6: { halign: 'center' },
-                7: {
-                    halign: 'center',
-                    fontStyle: 'bold',
-                },
+                6: { halign: 'center', fontStyle: 'bold' },
             },
             didParseCell(data) {
-                if (data.column.index === 7 && data.section === 'body') {
-                    data.cell.styles.textColor = data.cell.raw === 'Aprobado' ? COLORS.green : COLORS.red;
-                }
-                if (data.column.index === 2 && data.section === 'body') {
-                    const val = parseFloat(data.cell.raw);
-                    data.cell.styles.textColor = val >= 60 ? COLORS.green : COLORS.red;
+                if (data.section === 'body') {
+                    if (data.column.index === 2) data.cell.styles.textColor = parseFloat(data.cell.raw) >= 60 ? GREEN : RED;
+                    if (data.column.index === 6) data.cell.styles.textColor = data.cell.raw === 'APROBADO' ? GREEN : RED;
                 }
             },
             margin: { left: 14, right: 14 },
         });
 
         addFooter(doc);
-
-        const fecha = new Date().toISOString().slice(0, 10);
-        doc.save(`reporte_gaf_${fecha}.pdf`);
+        doc.save(`reporte_gaf_${new Date().toISOString().slice(0, 10)}.pdf`);
     },
 
-    /**
-     * Exportar detalle de un usuario específico
-     */
     exportarDetalle(detalle) {
-        const doc = new jsPDF();
-        const pageWidth = doc.internal.pageSize.getWidth();
+        const doc = new jsPDF({ orientation: 'portrait' });
+        const W = doc.internal.pageSize.getWidth();
 
-        addHeader(doc, `Detalle de Prueba - ${detalle.usuario.nombreCompleto}`);
+        addHeader(doc, 'Resultado de Prueba', detalle.usuario.nombreCompleto.toUpperCase());
+
+        let y = 42;
 
         // Info del usuario
-        let y = 36;
-        doc.setFillColor(241, 245, 249);
-        doc.roundedRect(14, y, pageWidth - 28, 28, 3, 3, 'F');
+        doc.setFillColor(...GRAY_LIGHT);
+        doc.roundedRect(14, y, W - 28, 26, 2, 2, 'F');
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.8);
+        doc.line(14, y, 14, y + 26);
 
-        doc.setTextColor(...COLORS.primary);
-        doc.setFontSize(10);
-        doc.setFont('helvetica', 'bold');
-        doc.text('Usuario:', 20, y + 8);
-        doc.text('Cédula:', 20, y + 16);
-        doc.text('Fecha:', pageWidth / 2, y + 8);
-        doc.text('Porcentaje:', pageWidth / 2, y + 16);
-
+        const col1 = 20, col2 = W / 2 + 4;
+        doc.setFontSize(7.5);
         doc.setFont('helvetica', 'normal');
-        doc.setTextColor(30, 41, 59);
-        doc.text(detalle.usuario.nombreCompleto, 50, y + 8);
-        doc.text(detalle.usuario.cedula, 50, y + 16);
-        doc.text(new Date(detalle.intento.fechaFin).toLocaleDateString('es-ES'), pageWidth / 2 + 25, y + 8);
+        doc.setTextColor(...GRAY_TEXT);
+        doc.text('NOMBRE COMPLETO', col1, y + 7);
+        doc.text('CEDULA', col1, y + 18);
+        doc.text('FECHA DE PRESENTACION', col2, y + 7);
+        doc.text('RESULTADO', col2, y + 18);
+
+        doc.setFontSize(9.5);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...DARK);
+        doc.text(detalle.usuario.nombreCompleto, col1, y + 13);
+        doc.text(detalle.usuario.cedula, col1, y + 23);
+        doc.text(new Date(detalle.intento.fechaFin).toLocaleDateString('es-ES'), col2, y + 13);
 
         const pct = Number(detalle.intento.porcentaje).toFixed(2);
-        doc.setFont('helvetica', 'bold');
-        doc.setTextColor(...(pct >= 60 ? COLORS.green : COLORS.red));
-        doc.text(`${pct}%`, pageWidth / 2 + 25, y + 16);
+        doc.setTextColor(...(pct >= 60 ? GREEN : RED));
+        doc.setFontSize(12);
+        doc.text(`${pct}%  ${pct >= 60 ? 'APROBADO' : 'REPROBADO'}`, col2, y + 23);
 
-        // Estadísticas
-        y += 36;
+        y += 34;
+
+        // Resumen
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(...PRIMARY_DARK);
+        doc.text('RESUMEN DE RESULTADOS', 14, y);
+        y += 4;
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.4);
+        doc.line(14, y, W - 14, y);
+        y += 3;
+
         autoTable(doc, {
             startY: y,
-            head: [['Correctas', 'Incorrectas', 'Total', 'Tiempo']],
+            head: [['Correctas', 'Incorrectas', 'Total Preguntas', 'Tiempo Empleado', 'Calificacion']],
             body: [[
                 detalle.intento.respuestasCorrectas,
                 detalle.intento.totalPreguntas - detalle.intento.respuestasCorrectas,
                 detalle.intento.totalPreguntas,
                 `${Math.floor(detalle.intento.tiempoSegundos / 60)}m ${detalle.intento.tiempoSegundos % 60}s`,
+                `${Number(detalle.intento.calificacion || 0).toFixed(2)} / 5.00`,
             ]],
-            theme: 'grid',
-            headStyles: { fillColor: COLORS.primary, textColor: COLORS.white, fontStyle: 'bold', halign: 'center' },
-            bodyStyles: { halign: 'center', fontStyle: 'bold' },
+            theme: 'plain',
+            headStyles: { fillColor: PRIMARY_DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 8, cellPadding: 4, halign: 'center' },
+            bodyStyles: { halign: 'center', fontStyle: 'bold', fontSize: 10, cellPadding: 5 },
+            didParseCell(data) {
+                if (data.section === 'body') {
+                    if (data.column.index === 0) data.cell.styles.textColor = GREEN;
+                    if (data.column.index === 1) data.cell.styles.textColor = RED;
+                }
+            },
             margin: { left: 14, right: 14 },
         });
 
-        // Respuestas
         y = doc.lastAutoTable.finalY + 10;
-        doc.setTextColor(...COLORS.primary);
-        doc.setFontSize(12);
+
+        // Detalle de respuestas
+        doc.setFontSize(9);
         doc.setFont('helvetica', 'bold');
-        doc.text('Detalle de Respuestas', 14, y);
+        doc.setTextColor(...PRIMARY_DARK);
+        doc.text('DETALLE DE RESPUESTAS', 14, y);
+        y += 4;
+        doc.setDrawColor(...PRIMARY);
+        doc.setLineWidth(0.4);
+        doc.line(14, y, W - 14, y);
+        y += 3;
 
         autoTable(doc, {
-            startY: y + 6,
-            head: [['#', 'Pregunta', 'Respuesta', 'Correcta', 'Resultado']],
+            startY: y,
+            head: [['N', 'Pregunta', 'Respuesta', 'Correcta', 'Resultado']],
             body: detalle.respuestas.map((r, i) => [
                 i + 1,
-                r.texto_pregunta.length > 60 ? r.texto_pregunta.substring(0, 60) + '...' : r.texto_pregunta,
-                r.respuesta_usuario || 'Sin respuesta',
+                r.texto_pregunta.length > 65 ? r.texto_pregunta.substring(0, 65) + '...' : r.texto_pregunta,
+                r.respuesta_usuario || '-',
                 r.respuesta_correcta,
-                r.es_correcta ? '✓ Correcta' : '✗ Incorrecta',
+                r.es_correcta ? 'CORRECTA' : 'INCORRECTA',
             ]),
-            theme: 'striped',
-            headStyles: { fillColor: COLORS.primary, textColor: COLORS.white, fontStyle: 'bold' },
-            alternateRowStyles: { fillColor: [241, 245, 249] },
+            theme: 'plain',
+            headStyles: { fillColor: PRIMARY_DARK, textColor: WHITE, fontStyle: 'bold', fontSize: 7.5, cellPadding: 3.5 },
+            bodyStyles: { fontSize: 7.5, cellPadding: 3 },
+            alternateRowStyles: { fillColor: GRAY_LIGHT },
             columnStyles: {
-                0: { halign: 'center', cellWidth: 10 },
-                1: { cellWidth: 100 },
-                2: { halign: 'center', cellWidth: 20 },
-                3: { halign: 'center', cellWidth: 20 },
-                4: { halign: 'center', fontStyle: 'bold', cellWidth: 25 },
+                0: { halign: 'center', cellWidth: 10, fontStyle: 'bold' },
+                1: { cellWidth: 105 },
+                2: { halign: 'center', cellWidth: 18 },
+                3: { halign: 'center', cellWidth: 18 },
+                4: { halign: 'center', fontStyle: 'bold', cellWidth: 22 },
             },
             didParseCell(data) {
-                if (data.column.index === 4 && data.section === 'body') {
-                    data.cell.styles.textColor = data.cell.raw.includes('✓') ? COLORS.green : COLORS.red;
+                if (data.section === 'body' && data.column.index === 4) {
+                    data.cell.styles.textColor = data.cell.raw === 'CORRECTA' ? GREEN : RED;
                 }
             },
             margin: { left: 14, right: 14 },
         });
 
         addFooter(doc);
-
         const nombre = detalle.usuario.nombreCompleto.replace(/\s+/g, '_').toLowerCase();
         doc.save(`resultado_${nombre}.pdf`);
     }
